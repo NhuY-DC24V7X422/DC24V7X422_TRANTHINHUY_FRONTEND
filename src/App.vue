@@ -1,11 +1,26 @@
-<script setup></script>
+<script>
+import AppHeader from "@/components/AppHeader.vue";
+
+export default {
+    components: {
+        AppHeader,
+    },
+};
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+    <div id="app">
+        <AppHeader />
+
+        <div class="container mt-3">
+            <router-view />
+        </div>
+    </div>
 </template>
 
-<style scoped></style>
+<style>
+.page {
+    max-width: 400px;
+    margin: auto;
+}
+</style>
