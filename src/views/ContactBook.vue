@@ -39,6 +39,20 @@
                     <i class="fas fa-address-card"></i>
                 </h4>
                 <ContactCard :contact="activeContact" />
+
+                <button
+                    class="mt-2 btn btn-sm"
+                    :class="
+                        activeContact.favorite
+                            ? 'btn-warning'
+                            : 'btn-outline-warning'
+                    "
+                    @click="toggleFavorite"
+                >
+                    <i class="fas fa-star"></i>
+                    {{ activeContact.favorite ? "Bỏ yêu thích" : "Thêm yêu thích" }}
+                </button>
+
                 <router-link
                     :to="{
                         name: 'contact.edit',
@@ -130,6 +144,20 @@ export default {
 
         goToAddContact() {
             this.$router.push({ name: "contact.add" });
+        },
+
+        async toggleFavorite() {
+            const contact = this.activeContact;
+            if (!contact) return;
+            try {
+                contact.favorite = !contact.favorite;
+                await ContactService.update(contact._id, {
+                    favorite: contact.favorite,
+                });
+            } catch (error) {
+                console.log(error);
+                contact.favorite = !contact.favorite;
+            }
         },
     },
     mounted() {
